@@ -36,12 +36,13 @@
 #include <string> //test case
 #include <iostream>
 #include <cstdio>
+#include <functional>
 
 
 #define DEBUG
-template <typename Itr> /*Iterator Type*/
-void Merge(Itr p, Itr q, Itr r) {
-	using T = typename std::iterator_traits<Itr>::value_type;
+template <typename Itr, typename Cmp>
+void Merge(Itr p, Itr q, Itr r, Cmp cmp) {
+	using T = typename std::iterator_traits<Itr>::value_type; /*Iterator Type*/
 	auto n1 = q - p + 1;
 	auto n2 = r - q + 1;
 	T L[n1], R[n2];
@@ -53,7 +54,7 @@ void Merge(Itr p, Itr q, Itr r) {
 	R[n2-1] = std::numeric_limits<T>::max();
 	auto i = L; j = R;
 	for (auto k = p; k != r; ++k) {
-		if (*i <= *j) {
+		if (cmp(*i,*j)) {
 			*k = *i;
 			++i;
 		} else {
@@ -63,16 +64,20 @@ void Merge(Itr p, Itr q, Itr r) {
 	}
 }
 
-template <typename Itr>
-void MergeSort(Itr p, Itr r) {
+template <typename Itr, typename Cmp>
+void MergeSort(Itr p, Itr r, Cmp cmp) {
 	if (p == r) return;
 	if (std::next(p) != r) {
 /* Lo, (p+r)/2 may overflow */
 		auto q = p + (r - p) / 2;
-		MergeSort(p,q);
-		MergeSort(q,r);
-		Merge(p,q,r);
+		MergeSort(p,q,cmp);
+		MergeSort(q,r,cmp);
+		Merge(p,q,r,cmp);
 	}
+}
+template <typename Itr>
+void MergeSort(Itr p, Itr r) {
+	MergeSort(p,r,std::less<typename std::iterator_traits<Itr>::value_type>());
 }
 
 #ifdef DEBUG

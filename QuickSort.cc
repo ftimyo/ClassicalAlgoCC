@@ -36,13 +36,14 @@
 #include <string>
 #include <cstdio>
 #include <iostream>
+#include <functional>
 #define DEBUG
-template <typename Itr>
-auto Partition(Itr p, Itr r) {
+template <typename Itr, typename Cmp>
+auto Partition(Itr p, Itr r, Cmp cmp) {
 	auto x = *std::prev(r);
 	auto i = std::prev(p);
 	for (auto j = p; j < r; ++j) {
-		if (*j <= x) {
+		if (!cmp(x,*j)) {
 			++i;
 			std::iter_swap(i,j);
 		}
@@ -50,14 +51,19 @@ auto Partition(Itr p, Itr r) {
 	return i;
 }
 
-template <typename Itr>
-void QuickSort(Itr p, Itr r) {
+template <typename Itr, typename Cmp>
+void QuickSort(Itr p, Itr r, Cmp cmp) {
 	if (p + 1 == r) return;
 	if (p != r) {
-		auto q = Partition(p,r);
-		QuickSort(p,q);
-		QuickSort(q+1,r);
+		auto q = Partition(p,r, cmp);
+		QuickSort(p,q,cmp);
+		QuickSort(q+1,r,cmp);
 	}
+}
+
+template <typename Itr>
+void QuickSort(Itr p, Itr r) {
+	QuickSort(p,r,std::less<typename std::iterator_traits<Itr>::value_type>());
 }
 
 #ifdef DEBUG

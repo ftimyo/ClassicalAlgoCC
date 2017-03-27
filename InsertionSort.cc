@@ -19,18 +19,23 @@
 #include <vector> //for test case
 #include <string> //for test case
 #include <cstdio>
+#include <functional>
 #define DEBUG
-template <typename InputItr>
-void InsertionSort(InputItr b, InputItr e) {
+template <typename Itr, typename Cmp>
+void InsertionSort(Itr b, Itr e, Cmp cmp) {
 	if (b == e) return;
 	for (auto i = std::next(b); i != e; ++i) {
 		auto key = *i;
 		auto j = std::prev(i);
-		for (; (j >= b && *j > key); --j) {
+		for (; (j >= b && cmp(key,*j)); --j) {
 			*std::next(j) = *j;
 		}
 		*std::next(j) = key;
 	}
+}
+template <typename Itr>
+void InsertionSort(Itr b, Itr e) {
+	InsertionSort(b,e,std::less<typename std::iterator_traits<Itr>::value_type>());
 }
 #ifdef DEBUG
 template <typename It>
