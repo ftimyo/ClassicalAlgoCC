@@ -187,6 +187,24 @@ void testHeap() {
 	printf("\n");
 }
 #endif
+//Heavy test for correctness
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+template <typename Func, typename Cmp>
+bool Test(Func func, Cmp cmp, int n = 10000) {
+	using namespace std;
+	srand(time(NULL));
+	int a[100];
+	for (int i = 0; i < n; ++i) {
+		for (auto& x : a) {
+			x = rand() % 10 * (((rand()%2)<<1)-1);
+		}
+		func(begin(a),end(a),cmp);
+		if (!std::is_sorted(begin(a),end(a),cmp)) return false;
+	}
+	return true;
+}
 using namespace std;
 int main() {
 #ifdef DEBUG
@@ -204,6 +222,8 @@ int main() {
 	HeapSort(begin(a6),end(a6));
 	HeapSort(begin(s1),end(s1));
 	HeapSort(begin(a7),end(a7));
+	fprintf(stderr, "Correctness %d\n",
+			Test(HeapSort<decltype(begin(a1)),decltype(std::less<int>())>,std::less<int>()));
 	printIA(begin(a1),end(a1));
 	printIA(begin(a2),end(a2));
 	printIA(begin(a3),end(a3));

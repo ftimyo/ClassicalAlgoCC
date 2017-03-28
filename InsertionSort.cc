@@ -49,6 +49,24 @@ void printS(It b, It e) {
 	fprintf(stderr,"\n");
 }
 #endif
+//Heavy test for correctness
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+template <typename Func, typename Cmp>
+bool Test(Func func, Cmp cmp, int n = 10000) {
+	using namespace std;
+	srand(time(NULL));
+	int a[100];
+	for (int i = 0; i < n; ++i) {
+		for (auto& x : a) {
+			x = rand() % 10 * (((rand()%2)<<1)-1);
+		}
+		func(begin(a),end(a),cmp);
+		if (!std::is_sorted(begin(a),end(a),cmp)) return false;
+	}
+	return true;
+}
 //test
 using namespace std;
 int main() {
@@ -66,6 +84,8 @@ int main() {
 	InsertionSort(begin(a6),end(a6));
 	InsertionSort(begin(s1),end(s1));
 	InsertionSort(begin(a7),end(a7));
+	fprintf(stderr, "Correctness %d\n",
+			Test(InsertionSort<decltype(begin(a1)),decltype(std::less<int>())>,std::less<int>()));
 #ifdef DEBUG
 	printIA(begin(a1),end(a1));
 	printIA(begin(a2),end(a2));
