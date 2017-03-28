@@ -31,7 +31,7 @@
  * RECURSIVE-ACTIVITY-SELECTOR(s,f,k,n)
  * 	m = k + 1
  * //find he first activity in Sₖ to finish
- * 	while m ≤ n and s[m] < f[k]	
+ * 	while m ≤ n and s[m] < f[k]
  * 		m = m + 1
  * 	if m ≤ n
  * 		return {aₘ} ∪ RECURSIVE-ACTIVITY-SELECTOR(s,f,m,n)
@@ -47,3 +47,62 @@
  * 			k = m
  * 	return A
  */
+
+#include <cstring>
+#include <cstdio>
+#define DEBUG
+constexpr int NIL = -1;
+template <typename T, int N>
+void ActivitySelector(T (&s)[N],T (&f)[N], int (&t)[N]) {
+	int k = 0;
+	memset(t,~0u,sizeof(t));
+	auto p = t;
+	*(p++)= k;
+	for (int i = 1; i < N; ++i) {
+		if (s[i] >= f[k]) {
+			*p = i;
+			++p;
+			k = i;
+		}
+	}
+#ifdef DEBUG
+	for (auto x : t) {
+		if (x != NIL) fprintf(stderr, "%3d",x);
+	}
+	puts("");
+#endif
+}
+
+template <typename T, int N>
+void RecursiveActivitySelector(T (&s)[N],T (&f)[N],
+		int t[], int k) {
+	*t = k;
+	auto i = k;
+	while (++i < N && s[i] < f[k]);
+	if (i < N) {
+		RecursiveActivitySelector(s,f,++t,i);
+	}
+}
+
+template <typename T, int N>
+void RecursiveActivitySelector(T (&s)[N],T (&f)[N],
+		int (&t)[N]) {
+	memset(t,~0u,sizeof(t));
+	RecursiveActivitySelector(s,f,t,0);
+#ifdef DEBUG
+	for (auto x : t) {
+		if (x != NIL) fprintf(stderr, "%3d",x);
+	}
+	puts("");
+#endif
+}
+
+//test
+int main() {
+	int s[] = {1,3,0,5,3,5,6,8,8,2,12};
+	int f[] = {4,5,6,7,9,9,10,11,12,14,16};
+	int t[11];
+	ActivitySelector(s,f,t);
+	RecursiveActivitySelector(s,f,t);
+	return 0;
+}
