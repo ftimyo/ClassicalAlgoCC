@@ -66,3 +66,88 @@
  * 			m[i,j] = q
  *	return m[i,j]
  */
+
+#include <type_traits>
+#include <limits>
+#include <cstdio>
+#define DEBUG
+template <int N>
+void PrintOptimalParens(int (&s)[N][N], int i, int j) {
+	if (i == j) printf("A%d",i);
+	else {
+		printf("(");
+		PrintOptimalParens(s,i,s[i][j]);
+		PrintOptimalParens(s,s[i][j]+1,j);
+		printf(")");
+	}
+}
+template <typename T, int N>
+void MatrixChainOrder(T (&p)[N]) {
+	using NT = std::remove_reference_t<T>;
+	NT m[N][N];
+	int s[N][N];
+	for (int i = 0; i < N; ++i) m[i][i] = 0;
+	for (int l = 2; l < N; ++l) {
+		for (int i = 1; i <= N - l; ++i) {
+			int j = i + l - 1;
+			m[i][j] = std::numeric_limits<NT>::max();
+			for (int k = i; k < j; ++k) {
+				auto q = m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j];
+				if (q < m[i][j]) {
+					m[i][j] = q;
+					s[i][j] = k;
+				}
+			}
+		}
+	}
+#ifdef DEBUG
+	puts("Bottomup");
+	printf("Total Multiplication: %lu\n", m[1][N-1]);
+	PrintOptimalParens(s,1,N-1);
+	puts("");
+#endif
+}
+
+template <typename T, int N>
+auto LookupChain(T (&p)[N], T(&m)[N][N], int (&s)[N][N], int i, int j) {
+	using NT = std::remove_reference_t<T>;
+	static constexpr auto INF = std::numeric_limits<NT>::max();
+	if (m[i][j] < INF) return m[i][j];
+	if (i == j) m[i][j] = 0;
+	else {
+		for (int k = i; k < j; ++k) {
+			auto q = LookupChain(p,m,s,i,k) + LookupChain(p,m,s,k+1,j) + p[i-1]*p[k]*p[j];
+			if (q < m[i][j]) {
+				m[i][j] = q;
+				s[i][j] = k;
+			}
+		}
+	}
+	return m[i][j];
+}
+template <typename T, int N>
+void MemoizedMatrixChain(T (&p)[N]) {
+	using NT = std::remove_reference_t<T>;
+	static constexpr auto INF = std::numeric_limits<NT>::max();
+	NT m[N][N];
+	int s[N][N];
+	for (int i = 0; i < N; ++i) {
+		for (int j = i; j < N; ++j) {
+			m[i][j] = INF;
+		}
+	}
+	LookupChain(p,m,s,1,N-1);
+#ifdef DEBUG
+	puts("Memoized");
+	printf("Total Multiplication: %lu\n", m[1][N-1]);
+	PrintOptimalParens(s,1,N-1);
+	puts("");
+#endif
+}
+
+int main () {
+	size_t p[] = {30,35,15,5,10,20,25};
+	MatrixChainOrder(p);
+	MemoizedMatrixChain(p);
+	return 0;
+}
