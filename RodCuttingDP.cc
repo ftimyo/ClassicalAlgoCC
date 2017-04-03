@@ -87,6 +87,32 @@ void BottomUpCutRod(T (&p)[N], int n) {
 		r[j] = q;
 	}
 #ifdef DEBUG
+	puts("Bottom Up r[j] = max{p[i]+r[j-i]} 1<=i<=j");
+	PrintCutRodSolution(r,s,n);
+	for (auto x : r) printf("%4d",x);
+	puts("");
+	for (auto x : s) printf("%4d",x);
+	puts("");
+#endif
+}
+template <typename T, int N>
+void BottomUpCutRod2(T (&p)[N], int n) {
+	using P = std::remove_reference_t<T>; 
+	P r[N];
+	int s[N];
+	r[0] = 0;
+	for (int j = 1; j < N; ++j) {
+		auto q = p[j];
+		for (int i = 1; i <= j/2; ++i) {
+			if (q < r[i] + r[j-i]) {
+				q = r[i] + r[j-i];
+				s[j] = i;
+			}
+		}
+		r[j] = q;
+	}
+#ifdef DEBUG
+	puts("Bottom Up r[j] = max{r[i]+r[j-i]} 1<=i<=j/2");
 	PrintCutRodSolution(r,s,n);
 	for (auto x : r) printf("%4d",x);
 	puts("");
@@ -124,13 +150,19 @@ void MemoizedCutRod(T (&p)[N], int n) {
 	for (auto& x : r) x = std::numeric_limits<P>::min();
 	auto q = MemoizedCutRodAux(p,n,r,s);
 #ifdef DEBUG
-	printf("MemoizedCutRod R = %4d\n",q);
+	puts("MemoizedCutRod");
+	PrintCutRodSolution(r,s,n);
+	for (auto x : r) printf("%4d",x);
+	puts("");
+	for (auto x : s) printf("%4d",x);
+	puts("");
 #endif
 }
 
 int main() {
 	int p[] = {0,1,5,8,9,10,17,17,20,24,30};
-	BottomUpCutRod(p,9);
-	MemoizedCutRod(p,9);
+	BottomUpCutRod(p,10);
+	MemoizedCutRod(p,10);
+	BottomUpCutRod2(p,10);
 	return 0;
 }
