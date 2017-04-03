@@ -61,3 +61,54 @@
  * 	else PRINT-LCS(b,X,i,j-1)
  *
  */
+
+#include <cstdio>
+#define DEBUG
+static constexpr int WE = -1;	//west
+static constexpr int NO = 1;	//north
+static constexpr int NW = 0;	//north west
+template <int N, int M>
+void PrintLCS(int (&b)[N][M], char X[], int i, int j) {
+	if (i == 0 || j == 0) return;
+	if (b[i][j] == NW) {
+		PrintLCS(b,X,i-1,j-1);
+		printf("%c",X[i-1]);
+	} else if (b[i][j] == NO) PrintLCS(b,X,i-1,j);
+	else PrintLCS(b,X,i,j-1);
+}
+template <int N, int M>
+void LCS(char (&X)[N], char (&Y)[M]) {
+	int c[N+1][M+1], b[N+1][M+1];
+	for (int i = 0; i <= N; ++i) c[i][0] = 0;
+	for (int i = 0; i <= M; ++i) c[0][i] = 0;
+	for (int i = 1; i <= N; ++i) {
+		for (int j = 1; j <= M; ++j) {
+			if (X[i-1] == Y[j-1]) {
+				c[i][j] = c[i-1][j-1] + 1;
+				b[i][j] = NW;
+			} else if (c[i][j-1] > c[i-1][j]) {
+				c[i][j] = c[i][j-1];
+				b[i][j] = WE;
+			} else {
+				c[i][j] = c[i-1][j];
+				b[i][j] = NO;
+			}
+		}
+	}
+#ifdef DEBUG
+	printf("X\t=\t");
+	for (auto x : X) printf("%c",x);
+	printf("\nY\t=\t");
+	for (auto x : Y) printf("%c",x);
+	printf("\nLCS\t=\t");
+	PrintLCS(b,X,N,M);
+	puts("");
+#endif
+}
+
+int main() {
+	char X[] = {'A','B','C','B','D','A','B'};
+	char Y[] = {'B','D','C','A','B','A'};
+	LCS(X,Y);
+	return 0;
+}
