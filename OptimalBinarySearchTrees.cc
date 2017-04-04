@@ -34,3 +34,108 @@
  * 		k.right = DummyKey(r)
  *
  */
+#include <cstdio>
+#include <type_traits>
+#include <limits>
+#include <cstring>
+#include <memory>
+#include <queue>
+
+#define DEBUG
+template <typename T, int N, int M>
+void PrintOBST(int (&root)[N][N], T (&e)[M][M], T(&w)[M][M]) {
+	for (auto& a : root) {
+		for (auto x : a) {
+			printf("%2d",x);
+		}
+		puts("");
+	}
+	puts("");
+	for (auto& a : e) {
+		for (auto x : a) {
+			printf("%.2f ",x);
+		}
+		puts("");
+	}
+	puts("");
+	for (auto& a : w) {
+		for (auto x : a) {
+			printf("%.2f ",x);
+		}
+		puts("");
+	}
+}
+struct Node {
+	int k;
+	std::shared_ptr<Node> l, r;
+	Node(int key):k(key){}
+};
+using NP = std::shared_ptr<Node>;
+template <int N>
+auto BuildBST(int (&root)[N][N], int i, int j) {
+	if (i > j) return NP{nullptr};
+	auto k = root[i][j];
+	auto t = std::make_shared<Node>(k);
+	t->l = BuildBST(root,i,k-1);
+	t->r = BuildBST(root,k+1,j);
+	return t;
+}
+void TraverseBST(NP root) {
+	std::queue<NP> q1,q2;
+	q1.push(root);
+	while (!q1.empty() || !q2.empty()) {
+		while (!q1.empty()) {
+			auto v = q1.front();q1.pop();
+			if (v->l != nullptr) q2.push(v->l);
+			if (v->r != nullptr) q2.push(v->r);
+			printf("%5d",v->k);
+		}
+		puts("");
+		while (!q2.empty()) {
+			auto v = q2.front();q2.pop();
+			if (v->l != nullptr) q1.push(v->l);
+			if (v->r != nullptr) q1.push(v->r);
+			printf("%5d",v->k);
+		}
+		puts("");
+	}
+}
+template <typename T, int N>
+void OptimalBinarySearchTree(T (&p)[N], T(&q)[N]) {
+	using TT = std::remove_reference_t<T>;
+	TT w[N+1][N+1], e[N+1][N+1];
+	int root[N][N];
+	memset(w,0,sizeof(w));
+	memset(e,0,sizeof(e));
+	memset(root,0,sizeof(root));
+	for (int i = 1; i <= N; ++i) {
+		w[i][i-1] = q[i-1];
+		e[i][i-1] = q[i-1];
+	}
+	for (int j = 1; j < N; ++j) {
+		for (int i = j; i > 0; --i) {
+			w[i][j] = w[i][j-1] + p[j] + q[j];
+			e[i][j] = std::numeric_limits<TT>::max();
+			for (int k = i; k <= j; ++k) {
+				auto q = e[i][k-1] + e[k+1][j] + w[i][j];
+				if (q < e[i][j]) {
+					e[i][j] = q;
+					root[i][j] = k;
+				}
+			}
+		}
+	}
+#ifdef DEBUG
+	PrintOBST(root,e,w);
+	auto bstroot = BuildBST(root,1,N-1);
+	fprintf(stderr, "BST tree built\n");
+	TraverseBST(bstroot);
+#endif
+}
+
+int main() {
+	float p[] = {0.00,	0.15,	0.10,	0.05,	0.10,	0.20};
+	float q[] = {0.05,	0.10,	0.05,	0.05,	0.05,	0.10};
+	OptimalBinarySearchTree(p,q);
+	return 0;
+}
