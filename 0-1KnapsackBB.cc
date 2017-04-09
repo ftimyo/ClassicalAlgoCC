@@ -5,8 +5,8 @@
  * of the weights of this subset is smaller than or equal to
  * Knapsack capacity C.
  *
- * We'll use backtracking, branch and bound best first search
- * to approach this problem.
+ * This file contains the backtracking, and Best first
+ * search with branch and bound implementations.
  */
 #include <iterator>
 #include <numeric>
@@ -15,6 +15,7 @@
 #include <queue>
 #include <cstdio>
 #define DEBUG
+/*General Tools*/
 template <typename WT, typename PT, typename IT>
 void GetSortedIndexAndValue(const WT& wt, const PT& pt, /*input*/
 		IT& si, WT& swt, PT& spt) { /*output*/
@@ -38,6 +39,7 @@ void GetSortedIndexAndValue(const WT& wt, const PT& pt, /*input*/
 			});
 }
 
+/*Backtracking*/
 template <typename WT, typename PT, typename IP,
 	typename W, typename P>
 auto Promising(IP i, WT& wt, PT& pt, W w, P p, W c,
@@ -96,6 +98,7 @@ void KnapsackBacktrack(const WT& wt, const PT& pt, T c) {
 #endif
 }
 
+/*Best First Search with Branch and Bound*/
 template <typename I, typename W, typename P>
 struct Node{
 	I i;
@@ -122,7 +125,6 @@ struct Node{
 	}
 };
 
-/* Branch and bound */
 template <typename WT, typename PT, typename IP,
 	typename W, typename P>
 auto Bound(IP i, WT& wt, PT& pt, W w, P p, W c) {
