@@ -1,8 +1,7 @@
 /* NP Complete
- * Given a connected, undirected graph, a Hamiltonian
- * Circuit (also called a tour) is a path that starts at a
- * given vertex, visits each vertex in the graph exactly
- * once, and ends at the starting vertex.
+ * A tour (also called a Hamiltonian circuit) in a directed
+ * graph is a path from a vertex to itself that passes
+ * through each of the other vertices exactly once.
  *
  * Use backtraking to determine all hamiltonian circuits.
  */

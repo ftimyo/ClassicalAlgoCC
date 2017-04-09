@@ -15,6 +15,23 @@
 #include <queue>
 #include <cstdio>
 #define DEBUG
+#define STAT
+
+#ifdef STAT
+static size_t __vs__;
+#define RESET()\
+	do{\
+		__vs__ = 0;\
+	}while(0)
+#define COUNT()\
+	do{\
+		++__vs__;\
+	}while(0)
+#define PRINT()\
+	do{\
+		fprintf(stderr,"NODE EXPAND %lu\n",__vs__);\
+	}while(0)
+#endif
 /*General Tools*/
 template <typename WT, typename PT, typename IT>
 void GetSortedIndexAndValue(const WT& wt, const PT& pt, /*input*/
@@ -64,6 +81,9 @@ template <typename IP, typename S, typename WT, typename PT,
 void Backtrack(IP i, S& sol, S& best, WT& wt, PT& pt,
 		W w, P p, W c/*capacity*/,
 		long double& mp/*max profit*/) {
+#ifdef STAT
+	COUNT();
+#endif
 	if (w <= c && p > mp) {
 		mp = p;
 		best = sol;
@@ -78,6 +98,9 @@ void Backtrack(IP i, S& sol, S& best, WT& wt, PT& pt,
 
 template <typename WT, typename PT,/*table type*/typename T>
 void KnapsackBacktrack(const WT& wt, const PT& pt, T c) {
+#ifdef STAT
+	RESET();
+#endif
 	using W = typename WT::value_type;
 	using P = typename PT::value_type;
 	W capacity = c;
@@ -95,6 +118,9 @@ void KnapsackBacktrack(const WT& wt, const PT& pt, T c) {
 		if (best[i]) printf("%-4lu",si[i]);
 	}
 	puts("");
+#ifdef STAT
+	PRINT();
+#endif
 #endif
 }
 
@@ -144,6 +170,9 @@ auto Bound(IP i, WT& wt, PT& pt, W w, P p, W c) {
 
 template <typename WT, typename PT,/*table type*/typename T>
 void KnapsackBranchAndBound(const WT& wt, const PT& pt, T c) {
+#ifdef STAT
+	RESET();
+#endif
 	using W = typename WT::value_type;
 	using P = typename PT::value_type;
 	using NODE = Node<size_t,W,P>;
@@ -159,6 +188,9 @@ void KnapsackBranchAndBound(const WT& wt, const PT& pt, T c) {
 			Bound(size_t{0},swt,spt,W{0},P{0},capacity));
 	/*best first search*/
 	while (!std::empty(maxheap)) {
+#ifdef STAT
+		COUNT();
+#endif
 		auto u = maxheap.top();maxheap.pop();
 		auto i = u.i++;
 		NODE v{u.i,u.w+swt[i],u.p+spt[i]};
@@ -182,6 +214,9 @@ void KnapsackBranchAndBound(const WT& wt, const PT& pt, T c) {
 	printf("%Lf\n",mp);
 	for (auto x : best) printf("%-4lu", x);
 	puts("");
+#ifdef STAT
+	PRINT();
+#endif
 #endif
 }
 
