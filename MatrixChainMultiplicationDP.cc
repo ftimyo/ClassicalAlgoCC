@@ -15,7 +15,7 @@
  * Thus the recursive definition for the minimum cost of
  * parenthesizing the product AᵢAᵢ₊₁...Aⱼ becomes
  * m[i,j] = 0						if i = j,
- * m[i,j] = min{m[i,k]+m[k+1,j]+pᵢ₋₁pₖpⱼ},where i≤k<j		if i<j.
+ * m[i,j] = min{m[i,k]+m[k+1,j]+pᵢ₋₁pₖpⱼ},where i≤k<j	if i<j.
  *
  * To construct the optimal solution, we define s[i,j] to be a
  * value of k at which we split the product AᵢAᵢ₊₁...Aⱼ in an
@@ -60,7 +60,7 @@
  * 	if i == j
  * 		m[i,j] = 0
  * 	else for k = i to j - 1
- * 		q = LOOKUP-CHAIN(m,p,i,k) + LOOKUP-CHAIN(m,p,k+1,j) 
+ * 		q = LOOKUP-CHAIN(m,p,i,k) + LOOKUP-CHAIN(m,p,k+1,j)
  * 				+ pᵢ₋₁ × pₖ ×  pⱼ
  * 		if q < m[i,j]
  * 			m[i,j] = q
@@ -116,7 +116,10 @@ auto LookupChain(T (&p)[N], T(&m)[N][N], int (&s)[N][N], int i, int j) {
 	if (i == j) m[i][j] = 0;
 	else {
 		for (int k = i; k < j; ++k) {
-			auto q = LookupChain(p,m,s,i,k) + LookupChain(p,m,s,k+1,j) + p[i-1]*p[k]*p[j];
+			auto q = LookupChain(p,m,s,i,k) +
+				LookupChain(p,m,s,k+1,j) +
+				p[i-1]*p[k]*p[j];
+
 			if (q < m[i][j]) {
 				m[i][j] = q;
 				s[i][j] = k;

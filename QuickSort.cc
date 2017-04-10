@@ -82,7 +82,8 @@ void QuickSortHoare(Itr p, Itr r, Cmp cmp) {
 template <typename Itr>
 void QuickSortHoare(Itr p, Itr r) {
 	QuickSortHoare(p,r,
-			std::less<typename std::iterator_traits<Itr>::value_type>());
+        std::less<
+            typename std::iterator_traits<Itr>::value_type>());
 }
 template <typename Itr, typename Cmp>
 auto Partition(Itr p, Itr r, Cmp cmp) {
@@ -109,7 +110,8 @@ void QuickSort(Itr p, Itr r, Cmp cmp) {
 
 template <typename Itr>
 void QuickSort(Itr p, Itr r) {
-	QuickSort(p,r,std::less<typename std::iterator_traits<Itr>::value_type>());
+	QuickSort(p,r,std::less<
+              typename std::iterator_traits<Itr>::value_type>());
 }
 
 #ifdef DEBUG
@@ -161,7 +163,8 @@ int main() {
 	QuickSort(begin(s1),end(s1));
 	QuickSort(begin(a7),end(a7));
 	fprintf(stderr, "Correctness %d\n",
-			Test(QuickSort<decltype(begin(a1)),decltype(std::less<int>())>,std::less<int>()));
+			Test(QuickSort<decltype(begin(a1)),
+                 decltype(std::less<int>())>,std::less<int>()));
 #else
 	QuickSortHoare(begin(a1),end(a1));
 	QuickSortHoare(begin(a2),end(a2));
@@ -171,7 +174,8 @@ int main() {
 	QuickSortHoare(begin(s1),end(s1));
 	QuickSortHoare(begin(a7),end(a7));
 	fprintf(stderr, "Correctness %d\n",
-			Test(QuickSortHoare<decltype(begin(a1)),decltype(std::less<int>())>,std::less<int>()));
+			Test(QuickSortHoare<decltype(begin(a1)),
+                 decltype(std::less<int>())>,std::less<int>()));
 #endif
 #ifdef DEBUG
 	printIA(begin(a1),end(a1));

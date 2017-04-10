@@ -25,7 +25,7 @@
 #define DEBUG
 
 template<typename T, int N>
-void BFSVisit(T (&e)[N], int u, bool visited[], int d[], int p[]) {
+void BFSVisit(T (&e)[N], int u, bool visited[], int d[],int p[]){
 	std::queue<int> q;
 	visited[u] = true;
 	q.push(u);

@@ -1,14 +1,17 @@
 /*
- * Dijkstra’s algorithm solves the single-source shortest-paths problem on a
- * weighted, directed graph G = (V,E) for the case in which all edge weights are
- * nonnegative. Therefore, we assume that w(u,v) ≥ 0 for each edge (u,v) ∈ E.
- * As we shall see, with a good implementation, the running time of Dijkstra’s
- * algorithm is lower than that of the Bellman-Ford algorithm.
+ * Dijkstra’s algorithm solves the single-source shortest-paths
+ * problem on a weighted, directed graph G = (V,E) for the case
+ * in which all edge weights are nonnegative. Therefore, we
+ * assume that w(u,v) ≥ 0 for each edge (u,v) ∈ E.
+ * As we shall see, with a good implementation, the running time
+ * of Dijkstra’s algorithm is lower than that of the
+ * Bellman-Ford algorithm.
  *
- * Dijkstra’s algorithm maintains a set S of vertices whose final shortest-path
- * weights from the source s have already been determined. The algorithm
- * repeatedly selects the vertex u ∈ V - S with the minimum shortest-path estimate,
- * adds u to S, and relaxes all edges leaving u.
+ * Dijkstra’s algorithm maintains a set S of vertices whose
+ * final shortest-path weights from the source s have already
+ * been determined. The algorithm repeatedly selects the vertex
+ * u ∈ V - S with the minimum shortest-path estimate, adds u to
+ * S, and relaxes all edges leaving u.
  */
 /*
  * INITIALIZE-SINGLE-SOURCE(G,s)
@@ -60,8 +63,11 @@ void SingleSourceShortestPathsDijkstraCore(T (&w)[N], int u) {
 	memset(visited, 0, sizeof(visited));
 	for (auto& i : d) i = INF;
 
-	auto cmp = [](auto& v1, auto& v2) {return v1.first > v2.first;};
-	std::priority_queue<std::pair<int,int>,std::vector<std::pair<int,int>>,
+	auto cmp = [](auto& v1, auto& v2)
+				{return v1.first > v2.first;};
+	std::priority_queue<
+		std::pair<int,int>,
+		std::vector<std::pair<int,int>>,
 		decltype(cmp)> pq(cmp);
 
 	d[u] = 0; p[u] = u;
@@ -92,7 +98,8 @@ void SingleSourceShortestPathsDijkstraCore(T (&w)[N], int u) {
 
 /*Dijkstra not using Heap*/
 template <typename T, int N>
-void SingleSourceShortestPathsDijkstraCoreSimple(T (&w)[N], int u) {
+void SingleSourceShortestPathsDijkstraCoreSimple(
+		T (&w)[N], int u) {
 	int d[N], p[N];
 	bool visited[N];
 	memset(visited, 0, sizeof(visited));

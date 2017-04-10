@@ -92,7 +92,8 @@ auto KthSelect(Itr p, Itr r, long k, Cmp cmp) {
 template <typename Itr>
 auto KthSelect(Itr p, Itr r, size_t k) {
 	return KthSelect(p,r,k,
-			std::less<typename std::iterator_traits<Itr>::value_type>());
+            std::less<
+            typename std::iterator_traits<Itr>::value_type>());
 }
 
 template <typename Itr, typename Cmp>
@@ -111,7 +112,8 @@ auto RandomizedKthSelect(Itr p, Itr r, long k, Cmp cmp) {
 template <typename Itr>
 auto RandomizedKthSelect(Itr p, Itr r, size_t k) {
 	return RandomizedKthSelect(p,r,k,
-			std::less<typename std::iterator_traits<Itr>::value_type>());
+			std::less<
+            typename std::iterator_traits<Itr>::value_type>());
 }
 
 //test

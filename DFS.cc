@@ -9,7 +9,7 @@
  * 			DFS-VISIT(G,u)
  *
  * 	DFS-VISIT(G,u)
- * 		time = time + 1				// white vertex u has just been discovered
+ * 		time = time+1 // white vertex u has just been discovered
  * 		u.d = time
  * 		u.color = GRAY
  * 		for each v ∈ G.Adj[u]	// explore edge (u,v)

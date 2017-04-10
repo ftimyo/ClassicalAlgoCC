@@ -1,14 +1,16 @@
-/* By relaxing the edges of a weighted dag (directed acyclic graph)
- * G = (V,E) according to a topological sort of its vertices, we can
- * compute shortest paths from a single source in 𝚯(V_E) time.
- * Shortest paths are always well defined in a dag, since even if
- * there are negative-weight edges, no negative-weight cycles can exist.
+/* By relaxing the edges of a weighted dag (directed acyclic
+ * graph) G = (V,E) according to a topological sort of its
+ * vertices, we can compute shortest paths from a single source
+ * in 𝚯(V_E) time. Shortest paths are always well defined in a
+ * dag, since even if there are negative-weight edges, no
+ * negative-weight cycles can exist.
  *
- * The algorithm starts by topologically sorting the dag to impose a linear
- * ordering on the vertices. If the dag contains a path from vertex u to
- * vertex v, then u precedes v in the topological sort. We make just one pass
- * over the vertices in the topologically sorted order. As we process
- * each vertex, we relax each edge that leaves the vertex.
+ * The algorithm starts by topologically sorting the dag to
+ * impose a linear ordering on the vertices. If the dag contains
+ * a path from vertex u to vertex v, then u precedes v in the
+ * topological sort. We make just one pass over the vertices in
+ * the topologically sorted order. As we process each vertex, we
+ * relax each edge that leaves the vertex.
  */
 /*
  * DAG-SHORTEST-PATHS(G,w,s)
@@ -18,8 +20,8 @@
  * 		for each vertex v ∈ G.Adj[u]
  * 			RELAX(u,v,w)
  */
-/* Can hand negative-weight edge, but due to the Topological sorting,
- * it can only process DAG (graph without cycle).
+/* Can hand negative-weight edge, but due to the Topological
+ * sorting, it can only process DAG (graph without cycle).
  * Time complexity 𝚯(V+E)*/
 #include <cstdio>
 #include <climits>
@@ -65,7 +67,8 @@ void SingleSourceShortestPathsDAG(T (&w)[N], int s) {
 	for (auto u : V) {
 		if (u == NIL) continue;
 		for (int v = 0; v < N; ++v) {
-			if (d[u] != INF && w[u][v] != INF && d[v] > d[u] + w[u][v]) {
+			if (d[u] != INF && w[u][v] != INF &&
+                d[v] > d[u] + w[u][v]) {
 				p[v] = u; d[v] = d[u] + w[u][v];
 			}
 		}

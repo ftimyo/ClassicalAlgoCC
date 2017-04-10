@@ -30,7 +30,8 @@ void MSTPrimCore(T (&w)[N], int u) {
 
 	/*build a min Heap*/
 	auto cmp = [](auto v1, auto v2){return v1.first > v2.first;};
-	std::priority_queue<std::pair<int, int>,std::vector<std::pair<int,int>>,
+	std::priority_queue<std::pair<int, int>,
+        std::vector<std::pair<int,int>>,
 		decltype(cmp)> pq(cmp);
 
 	d[u] = 0; p[u] = u;
@@ -49,7 +50,7 @@ void MSTPrimCore(T (&w)[N], int u) {
 		}
 	}
 #ifdef DEBUG
-	fprintf(stderr, "Implementation using Heap | weight:%3d\n",tw);
+	printf("Implementation using Heap | weight:%3d\n",tw);
 	for (int u = 0; u < N; ++u) {
 		if (u == p[u]) continue;
 		fprintf(stderr, "%-4d -- %4d\n",p[u],u);
@@ -68,7 +69,7 @@ void MSTPrimCoreSimple(T (&w)[N], int u) {
 	for (int i = 0; i < N; ++i) {
 /* search for the vertex closest to the spanning tree */
 		auto min = INF;
-		for (int v = 0; v < N; ++v) if (!visited[v] && d[v] < min) {
+		for (int v = 0; v < N; ++v) if (!visited[v] && d[v]<min){
 			u = v;
 			min = d[v];
 		}

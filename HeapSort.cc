@@ -134,7 +134,9 @@ void HeapSort(Itr p, Itr q, Cmp cmp) {
 }
 template <typename Itr>
 void HeapSort(Itr p, Itr q) {
-	HeapSort(p,q,std::less<typename std::iterator_traits<Itr>::value_type>());
+	HeapSort(p,q,
+        std::less<
+            typename std::iterator_traits<Itr>::value_type>());
 }
 
 template <typename Itr>
@@ -223,7 +225,8 @@ int main() {
 	HeapSort(begin(s1),end(s1));
 	HeapSort(begin(a7),end(a7));
 	fprintf(stderr, "Correctness %d\n",
-			Test(HeapSort<decltype(begin(a1)),decltype(std::less<int>())>,std::less<int>()));
+        Test(HeapSort<decltype(begin(a1)),
+             decltype(std::less<int>())>,std::less<int>()));
 	printIA(begin(a1),end(a1));
 	printIA(begin(a2),end(a2));
 	printIA(begin(a3),end(a3));

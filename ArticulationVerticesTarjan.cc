@@ -16,7 +16,8 @@ void DFSVisit(T (&e)[N], int u, int p, int& time, int visited[],
 			++child;
 /* if there is no vertex in subtree rooted with v has
  * a back edge to one of the ancestors of u, set the nbe flag.
- * if u is not the root of the tree, u is an articulation vertex */
+ * if u is not the root of the tree, u is an articulation vertex 
+ */
 			if (low[v] >= visited[u]) nbe = true;
 			low[u] = std::min(low[u], low[v]);
 		} else {

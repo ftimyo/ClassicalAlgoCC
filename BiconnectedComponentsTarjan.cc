@@ -1,9 +1,12 @@
-/*An undirected graph is called Biconnected if there are two vertex-disjoint
- * paths between any two vertices. In a Biconnected Graph, there is a simple
- * cycle through any two vertices.
- * By convention, two nodes connected by an edge form a biconnected graph, but
- * this does not verify the above properties. For a graph with more than two
- * vertices, the above properties must be there for it to be Biconnected.*/
+/* An undirected graph is called Biconnected if there are two
+ * vertex-disjoint paths between any two vertices. In a
+ * Biconnected Graph, there is a simple cycle through any two
+ * vertices.
+ * By convention, two nodes connected by an edge form a
+ * biconnected graph, but this does not verify the above
+ * properties. For a graph with more than two vertices, the
+ * above properties must be there for it to be Biconnected.
+ */
 #include <cstdio>
 #include <algorithm>
 #include <cstring>
@@ -12,17 +15,20 @@
 
 template<typename T, int N>
 void DFSVisit(T (&e)[N], int u, int p, int& time, int visited[],
-		int low[], int bcc[][N], int& bccID, std::stack<std::pair<int,int>>& ss) {
+		int low[], int bcc[][N], int& bccID,
+        std::stack<std::pair<int,int>>& ss) {
 	low[u] = visited[u] = ++time;
 	for (int v = 0; v < N; ++v) {
 /* prevent selfloop and revisit the immediate parent */
 		if (!(e[u][v] || e[v][u]) || v == p || u == v) continue;
 		if (0 == visited[v]) {
 			ss.emplace(u, v);
-			DFSVisit(e, v, u, time, visited, low, bcc, bccID, ss);
+			DFSVisit(e, v, u, time, visited, low, bcc,bccID,ss);
 			low[u] = std::min(low[u], low[v]);
-/* if the subtree does not reach a earlier visited vertex, u becomes the
- * articulation point for the ancesters and the v-rooted descendants */
+/* if the subtree does not reach a earlier visited vertex, u
+ * becomes the articulation point for the ancesters and the
+ * v-rooted descendants
+ */
 			if (low[v] >= visited[u]) {
 				++bccID;
 				int i, j;
@@ -33,7 +39,8 @@ void DFSVisit(T (&e)[N], int u, int p, int& time, int visited[],
 					bcc[i][j] = bccID;
 				} while (i != u || j != v);
 			}
-		} else if (visited[v] < visited[u]/*avoid adding visited-edges*/) {
+        } else if (visited[v] < visited[u]) {
+/* avoid adding visited-edges */
 			low[u] = std::min(low[u], visited[v]);
 			ss.emplace(u, v);
 		}
@@ -58,7 +65,7 @@ void BiconnectedComponentsTarjan(T (&e)[N]) {
 		for (int i = 0; i < N; ++i) {
 			for (int j = 0; j < N; ++j) {
 				if (bcc[i][j] == k)
-					fprintf(stderr, "%4d:%2d,%2d\n", bcc[i][j], i, j);
+					printf("%4d:%2d,%2d\n",bcc[i][j],i,j);
 			}
 		}
 	}

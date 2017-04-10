@@ -6,7 +6,8 @@
 
 template<typename T, int N>
 void DFSVisit(T (&e)[N], int u, int& time, int visited[],
-		bool instack[], int low[], int bcc[], std::stack<int>& ss) {
+		bool instack[], int low[], int bcc[],
+        std::stack<int>& ss) {
 	low[u] = visited[u] = ++time;
 	ss.push(u);
 	instack[u] = true;
@@ -22,7 +23,7 @@ void DFSVisit(T (&e)[N], int u, int& time, int visited[],
 		}
 	}
 /* if u is the highest ancester its descendants can reach, p-u
- * becomes the bridge between u-rooted subtree and u's ancester */
+ * becomes the bridge between u-rooted subtree and u's ancester*/
 	int i;
 	if (low[u] == visited[u]) {
 		do {

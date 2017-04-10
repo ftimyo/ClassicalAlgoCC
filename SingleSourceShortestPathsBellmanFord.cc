@@ -9,7 +9,8 @@
  * 	return TRUE
  */
 /* Can handle all cases of single source shortest path problem,
- * when encounter negative weight cycle, the algorithm return false
+ * when encounter negative weight cycle, the algorithm return
+ * false
  * Time: O(V^3)
  */
 #include <cstdio>
@@ -42,7 +43,9 @@ bool SingleSourceShortestPathsBellmanFord(T (&w)[N], int s) {
  * after the following iterations */
 		for (int u = 0; u < N; ++u)  {
 			for (int v = 0; v < N; ++v) {
-				if (w[u][v] < INF && d[u] < INF && d[v] > w[u][v] + d[u]) { /*relaxation*/
+				if (w[u][v] < INF &&
+                    d[u] < INF && d[v] > w[u][v] + d[u]) {
+                    /*relaxation*/
 					p[v] = u; d[v] = d[u] + w[u][v];
 				}
 			}
@@ -51,7 +54,8 @@ bool SingleSourceShortestPathsBellmanFord(T (&w)[N], int s) {
 /* checking for negative weighted cycle */
 	for (int u = 0; u < N; ++u)
 		for (int v = 0; v < N; ++v)
-			if (d[v] < INF && d[u] < INF && d[v] - d[u] > w[u][v]) return false;
+			if (d[v] < INF && d[u] < INF &&
+                d[v] - d[u] > w[u][v]) return false;
 #ifdef DEBUG
 	fprintf(stdout,"Bellman-Ford\n");
 	for (int v = 0; v < N; ++v) {

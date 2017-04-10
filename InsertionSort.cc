@@ -35,7 +35,9 @@ void InsertionSort(Itr b, Itr e, Cmp cmp) {
 }
 template <typename Itr>
 void InsertionSort(Itr b, Itr e) {
-	InsertionSort(b,e,std::less<typename std::iterator_traits<Itr>::value_type>());
+	InsertionSort(b,e,
+        std::less<
+            typename std::iterator_traits<Itr>::value_type>());
 }
 #ifdef DEBUG
 template <typename It>
@@ -85,7 +87,9 @@ int main() {
 	InsertionSort(begin(s1),end(s1));
 	InsertionSort(begin(a7),end(a7));
 	fprintf(stderr, "Correctness %d\n",
-			Test(InsertionSort<decltype(begin(a1)),decltype(std::less<int>())>,std::less<int>()));
+			Test(InsertionSort<
+                 decltype(begin(a1)),
+                 decltype(std::less<int>())>,std::less<int>()));
 #ifdef DEBUG
 	printIA(begin(a1),end(a1));
 	printIA(begin(a2),end(a2));

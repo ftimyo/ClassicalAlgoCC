@@ -4,7 +4,7 @@
  * 	for each vertex v ∈ G.V
  * 		MAKE-SET(v)
  * 	sort the edges of G.E into nondecreasing order by weight w
- * 	for each edge (u,v) ∈ G.E, take in nondecreasing order by weight
+ * 	for each edge (u,v)∈G.E,take in nondecreasing order by weight
  * 		if FIND-SET(u) ≠ FIND-SET(v)
  * 			A = A ∪ {(u,v)}
  * 			UNION(u,v)

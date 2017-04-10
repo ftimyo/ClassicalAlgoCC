@@ -1,7 +1,9 @@
 /*
+ * using RN = residual network
+ *
  * FORD-FULKERSON-METHOD(G,s,t)
  * 	initialize flow f to 0
- * 	while there exists an augmenting path p in the residual network Gf
+ * 	while there exists an augmenting path p in the RN Gf
  * 		augment flow f along p
  * 	return f
  */
@@ -9,7 +11,7 @@
  * FORD-FULKERSON(G,s,t)
  * 	for each edge (u,v) ∈ G.E
  * 		(u,v).f = 0
- * 	while there exists a path p form s to t in the residual network Gf
+ * 	while there exists a path p form s to t in the RN Gf
  * 		cf(p) = min{cf(u,v):(u,v) is in p}
  * 		for each edge (u,v) in p
  * 			if (u,v) ∈ E
@@ -49,7 +51,8 @@ int BFS(T (&e)[N], int s, int t, int p[]) {
 }
 
 template <typename T, int N>
-void MaxFlowMinCutFordFulkersonEdmondsKarp(T (&C)[N], int s, int t) {
+void MaxFlowMinCutFordFulkersonEdmondsKarp(T (&C)[N],
+                                           int s,int t){
 	std::remove_reference_t<decltype(C)> R;
 	std::remove_all_extents_t<T> maxflow = 0;
 	int p[N];
@@ -76,7 +79,7 @@ void MaxFlowMinCutFordFulkersonEdmondsKarp(T (&C)[N], int s, int t) {
 
 #ifdef DEBUG
 	fprintf(stderr, "Max Flow:%5d\nCut:\n",maxflow);
-	for (auto& e : cut) fprintf(stderr,"%-2d--%2d\n",e.first,e.second);
+	for (auto& e : cut) printf("%-2d--%2d\n",e.first,e.second);
 #endif
 }
 

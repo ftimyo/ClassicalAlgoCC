@@ -42,7 +42,8 @@
 #define DEBUG
 template <typename Itr, typename Cmp>
 void Merge(Itr p, Itr q, Itr r, Cmp cmp) {
-	using T = typename std::iterator_traits<Itr>::value_type; /*Iterator Type*/
+    /*Iterator Type*/
+	using T = typename std::iterator_traits<Itr>::value_type;
 	auto n1 = q - p + 1;
 	auto n2 = r - q + 1;
 	T L[n1], R[n2];
@@ -77,7 +78,8 @@ void MergeSort(Itr p, Itr r, Cmp cmp) {
 }
 template <typename Itr>
 void MergeSort(Itr p, Itr r) {
-	MergeSort(p,r,std::less<typename std::iterator_traits<Itr>::value_type>());
+	MergeSort(p,r,std::less<
+              typename std::iterator_traits<Itr>::value_type>());
 }
 
 #ifdef DEBUG
@@ -128,7 +130,8 @@ int main() {
 	MergeSort(begin(s1),end(s1));
 	MergeSort(begin(a7),end(a7));
 	fprintf(stderr, "Correctness %d\n",
-			Test(MergeSort<decltype(begin(a1)),decltype(std::less<int>())>,std::less<int>()));
+			Test(MergeSort<decltype(begin(a1)),
+                 decltype(std::less<int>())>,std::less<int>()));
 #ifdef DEBUG
 	printIA(begin(a1),end(a1));
 	printIA(begin(a2),end(a2));

@@ -62,20 +62,26 @@ void ConvexHullGrahamScan(P (&V)[N]){
 	auto pb = std::begin(V);
 	for (auto& p : SV) p = pb++;
 
-	auto p0 = std::min_element(std::begin(SV),std::end(SV),[](auto& p1, auto& p2){
-			return p1->y < p2->y || (p1->y == p2->y && p1->x < p2->x);
+	auto p0 = std::min_element(std::begin(SV),std::end(SV),
+			[](auto& p1, auto& p2){
+				return p1->y < p2->y ||
+					(p1->y == p2->y && p1->x < p2->x);
 			});
 	std::iter_swap(std::begin(SV), p0);
 
 	p0 = std::begin(SV);
-	std::sort(std::next(std::begin(SV)), std::end(SV),[&p0](auto& p1, auto p2){
-			auto cp = (*p0)->PolarAngle(*p1,*p2);
-			return cp > 0 || (cp == 0 && ((*p0)->dist(*p1) < (*p0)->dist(*p2)));
+	std::sort(std::next(std::begin(SV)), std::end(SV),
+			[&p0](auto& p1, auto p2){
+				auto cp = (*p0)->PolarAngle(*p1,*p2);
+				return cp > 0 ||
+					(cp == 0 &&
+					 ((*p0)->dist(*p1) < (*p0)->dist(*p2)));
 			});
 
 	auto top = size_t{0};
 	for (auto p : SV) {
-		while (top > 2 && S[top-2]->PolarAngle(*S[top-1],*p) <= 0) --top;
+		while (top > 2 &&
+				S[top-2]->PolarAngle(*S[top-1],*p) <= 0) --top;
 		S[top++] = p;
 	}
 

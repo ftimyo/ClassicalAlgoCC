@@ -1,8 +1,10 @@
 /*
+ * using B-F = BellmanFord algorithm
  * Similar thought to Bellman, but a little bit faster.
  */
 /* Can handle all cases of single source shortest path problem,
- * when encounter negative weight cycle, the algorithm return false
+ * when encounter negative weight cycle, the algorithm return
+ * false
  * Time: O(V^3)
  */
 #include <cstdio>
@@ -38,14 +40,14 @@ bool SingleSourceShortestPathsLabelCorrecting(T (&w)[N], int s) {
 	while (!q.empty()) {
 		int u = q.front(); q.pop();
 		inqueue[u] = false;
-/* Not required, but perf boost, makes it faster than Bellman-Ford */
+/* Not required, but perf boost, makes it faster than B-F */
 		if (inqueue[p[u]]) continue;
 		for (int v = 0; v < N; ++v) {
 			if (w[u][v] != INF && w[u][v] + d[u] < d[v]) {
 				d[v] = d[u] + w[u][v];
 				p[v] = u; pe[v] = pe[u] + 1;
 				if (pe[u] > N - 1) return false;
-/* Not required, but perf boost, makes it faster than Bellman-Ford */
+/* Not required, but perf boost, makes it faster than B-F */
 				if (inqueue[v]) continue;
 				q.push(v); inqueue[v] = true;
 			}

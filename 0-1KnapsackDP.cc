@@ -37,7 +37,8 @@ void Knapsack(WT& wt, PT& pt, W C){
 	for (I i = 0; i < N; ++i) {
 		for (I c = 0; c <= C; ++c) {
 			if (wt[i] <= c)
-				P[i+1][c] = std::max(P[i][c], pt[i]+P[i][c-wt[i]]);
+				P[i+1][c] = std::max(P[i][c],
+                                     pt[i]+P[i][c-wt[i]]);
 			else
 				P[i+1][c] = P[i][c];
 		}
@@ -103,7 +104,8 @@ void Knapsack4(WT& wt, PT& pt, W C){
 	for (I i = 0; i < N; ++i) {
 		for (I c = 0; c <= C; ++c) {
 			if (wt[i] <= c)
-				P[i+1][c] = std::max(P[i][c], pt[i]+P[i][c-wt[i]]);
+				P[i+1][c] = std::max(P[i][c],
+                                     pt[i]+P[i][c-wt[i]]);
 			else
 				P[i+1][c] = P[i][c];
 		}

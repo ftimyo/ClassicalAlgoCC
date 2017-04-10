@@ -1,17 +1,18 @@
 /*
  * Problem:
- * Given a sequence K = ＜k₁,k₂,...,kₙ＞ of n distinct keys in sorted order (so
- * that k₁ < k₂ < ... < kₙ), and we wish to build a binary search tree from
- * these keys. For each key kᵢ, we have a probability pᵢ that a search will be
- * for kᵢ. We also have n + 1 "dummy keys" ＜d₀,d₁,d₂,...,dₙ＞ representing
- * values not in K. The dummy key dᵢ represent all values between kᵢ and kᵢ₊₁.
- * For each dummy key dᵢ, we have a probability qᵢ that a search will correspond
- * to dᵢ.
+ * Given a sequence K = ＜k₁,k₂,...,kₙ＞ of n distinct keys in
+ * sorted order (so that k₁ < k₂ < ... < kₙ), and we wish to
+ * build a binary search tree from these keys. For each key kᵢ,
+ * we have a probability pᵢ that a search will be for kᵢ. We also
+ * have n + 1 "dummy keys" ＜d₀,d₁,d₂,...,dₙ＞ representing
+ * values not in K. The dummy key dᵢ represent all values
+ * between kᵢ and kᵢ₊₁. For each dummy key dᵢ, we have a
+ * probability qᵢ that a search will correspond to dᵢ.
  *
  * Solution:
  *
  * w[i,j] = ∑p(i to j) + ∑q(i-1 to j)
- * e[i,j] represents the expected cost of the OBST for k[i] to k[j].
+ * e[i,j] is the expected cost of the OBST for k[i] to k[j].
  *
  * w[i,j] = w[i,k-1] + pₖ + w[k+1,j]
  * e[i,j] = pₖ + (e[i,k-1] + w[i,k-1]) + (e[k+1,j] + w[k+1,j])

@@ -2,10 +2,11 @@
  * STRONGLY-CONNECTED-COMPONENTS(G)
  * 1 call DFS(G) to compute finishing times u.f for each vertex u
  * 2 compute Gᵀ
- * 3 call DFS(Gᵀ), but in the main loop of DFS, consider the vertices
- * 		in order of decreasing u.f (as computed in line 1)
- * 4 output the vertices of each tree in the depth-first forest formed
- * 		in line 3 as a separate strongly connected component
+ * 3 call DFS(Gᵀ), but in the main loop of DFS, consider the
+ * 		vertices in order of decreasing u.f (as computed in
+ * 		line 1)
+ * 4 output the vertices of each tree in the depth-first forest
+ * 		formed in line 3 as a separate SCC
  */
 #include <cstdio>
 #include <cstring>
@@ -35,7 +36,10 @@ void TopologicalSort(T (&e)[N], int tordered[]) {
 	}
 }
 
-/*DFS traverse the component and contract the visited vertices to root*/
+/*
+ * DFS traverse the component and
+ * contract the visited vertices to root
+ */
 template<typename T, int N>
 void Contract(T (&e)[N], int root, bool visited[], int scc[]) {
 	std::stack<int> ss;

@@ -1,7 +1,7 @@
 /*
  * TOPOLOGICAL-SORT(G)
  * 	call DFS(G) to compute finishing times v.f for each vertex v
- * 	as each vertex is finished, insert it onto the front of a linked list
+ * 	as each vertex is done, insert it onto the front of a list
  * 	return the linked list of vertices
  */
 /*

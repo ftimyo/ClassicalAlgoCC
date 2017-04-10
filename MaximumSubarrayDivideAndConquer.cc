@@ -18,7 +18,7 @@
  *
  * 	FIND-MAXIMUM-SUBARRAY(A,low,high)
  * 		if high = low
- * 			return (low,high,A[low])		//base case: only one element
+ * 			return (low,high,A[low])//base case: only one element
  * 		else mid = ⎣ (low + high) / 2⎦
  * 			(left-low,left-high,left-sum) =
  * 				FIND-MAXIMUM-SUBARRAY(A,low,mid)
@@ -36,7 +36,8 @@
 #include <iterator>
 #include <limits>
 template <typename Itr>
-auto FindMaxCrossingSubarray(Itr p, Itr q, Itr r, Itr& maxl, Itr& maxr) {
+auto FindMaxCrossingSubarray(Itr p, Itr q, Itr r,
+                             Itr& maxl, Itr& maxr) {
 	using T = typename std::iterator_traits<Itr>::value_type;
 	auto lsum = std::numeric_limits<T>::min();
 	T sum = 0;
@@ -89,7 +90,7 @@ auto FindMaximumSubarray(Itr p, Itr r, Itr& subl, Itr& subr) {
 using namespace std;
 #include <vector>
 int main () {
-	int a[] = {13,-3,-25,20,-3,-16,-23,18,20,-7,12,-5,-22,15,-4,7};
+	int a[]={13,-3,-25,20,-3,-16,-23,18,20,-7,12,-5,-22,15,-4,7};
 	for (auto x : a) printf("%-4d",x);
 	puts("");
 	decltype(begin(a)) l, r;

@@ -15,7 +15,7 @@ void TransitiveClosureWarshall(T (&e)[N]) {
 #ifdef DEBUG
 	fprintf(stderr, "\n");
 	for (int i = 0; i < N; ++i) {
-		for (int j = 0; j < N; ++j) fprintf(stderr, "%3d", tc[i][j]);
+		for (int j = 0; j < N; ++j) printf("%3d", tc[i][j]);
 		fprintf(stderr, "\n");
 	}
 #endif

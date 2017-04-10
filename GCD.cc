@@ -24,14 +24,16 @@
 #include <type_traits>
 #include <cstdio>
 
-template <typename N, typename = std::enable_if_t<std::is_integral<N>::value>>
+template <typename N,
+    typename = std::enable_if_t<std::is_integral<N>::value>>
 auto EuclidGCD(N a, N b) {
 	if (a < b) std::swap(a,b);
 	if (b == 0) return a;
 	else return EuclidGCD(b, a%b);
 }
 /*nonrecursion version*/
-template <typename N, typename = std::enable_if_t<std::is_integral<N>::value>>
+template <typename N,
+    typename = std::enable_if_t<std::is_integral<N>::value>>
 auto EuclidGCDNR(N a, N b) {
 	if (a < b) std::swap(a,b);
 	while (b!=0) {

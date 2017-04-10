@@ -78,7 +78,8 @@ auto SegmentIntersect(P& p1, P& p2, P& p3, P& p4) {
 	auto d2 = Direction(p3,p4,p2);
 	auto d3 = Direction(p1,p2,p3);
 	auto d4 = Direction(p1,p2,p4);
-	if (((d1<0&&d2>0)||(d1>0&&d2<0)) && ((d3<0&&d4>0)||(d3>0&&d4<0))) return true;
+	if (((d1<0&&d2>0)||(d1>0&&d2<0)) &&
+        ((d3<0&&d4>0)||(d3>0&&d4<0))) return true;
 	else if (d1 == 0 && OnSegment(p3,p4,p1)) return true;
 	else if (d2 == 0 && OnSegment(p3,p4,p2)) return true;
 	else if (d3 == 0 && OnSegment(p1,p2,p3)) return true;

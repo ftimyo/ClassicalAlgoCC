@@ -22,7 +22,8 @@ void DFSVisit(T (&e)[N], int u, int p, int& time, int visited[],
 		}
 	}
 /* if u is the highest ancester its descendants can reach, p-u
- * becomes the bridge between u-rooted subtree and u's ancester */
+ * becomes the bridge between u-rooted subtree and u's ancester
+ */
 	int i;
 	if (low[u] == visited[u]) {
 		do {

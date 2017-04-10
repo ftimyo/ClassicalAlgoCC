@@ -32,8 +32,9 @@ void BridgeTarjan(T (&e)[N]) {
 	}
 #ifdef DEBUG
 	fprintf(stderr, "\n");
-	for (int u = 0; u < N; ++u) for (int v = 0; v < N; ++v) if (br[u][v])
-		fprintf(stderr, "%4d,%4d\n", u, v);
+	for (int u = 0; u < N; ++u) for (int v = 0; v < N; ++v)
+        if (br[u][v])
+            fprintf(stderr, "%4d,%4d\n", u, v);
 #endif
 }
 

@@ -45,8 +45,10 @@ struct Point {
 };
 template <typename P, int N>
 void ConvexHullJarvisMarch(P (&V)[N]){
-	auto p0 = std::min_element(std::begin(V),std::end(V),[](auto& p1, auto& p2){
-			return p1.y < p2.y || (p1.y == p2.y && p1.x < p2.x);
+	auto p0 = std::min_element(std::begin(V),std::end(V),
+			[](auto& p1, auto& p2){
+				return p1.y < p2.y ||
+					(p1.y == p2.y && p1.x < p2.x);
 			});
 
 	decltype(p0) HV[N] /*Hull vertex*/;
@@ -55,9 +57,11 @@ void ConvexHullJarvisMarch(P (&V)[N]){
 	auto n = size_t{0};
 	do {
 		HV[n++] = p;
-		p = std::min_element(std::begin(V),std::end(V),[p](auto& p1, auto& p2){
-				auto cp = p->PolarAngle(p1,p2);
-				return cp > 0 || (cp == 0 && (p->dist(p1) > p->dist(p2)));
+		p = std::min_element(std::begin(V),std::end(V),
+				[p](auto& p1, auto& p2){
+					auto cp = p->PolarAngle(p1,p2);
+					return cp > 0 ||
+						(cp == 0 && (p->dist(p1) > p->dist(p2)));
 				});
 	} while (p != p0);
 #ifdef DEBUG

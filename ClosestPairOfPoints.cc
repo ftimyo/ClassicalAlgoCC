@@ -24,7 +24,8 @@ struct Point {
 		return std::sqrt(tmp.x*tmp.x+tmp.y*tmp.y);
 	}
 };
-template <typename It, typename T = typename std::iterator_traits<It>::value_type>
+template <typename It, typename T =
+			typename std::iterator_traits<It>::value_type>
 auto ClosestPair(It l, It h) {
 	auto r = std::distance(l,h);
 	auto d = INF;
@@ -50,7 +51,7 @@ auto ClosestPair(It l, It h) {
 	std::sort(std::begin(t), std::end(t),[](auto& p1, auto& p2){
 			return p1->y < p2->y;
 			});
-	for (auto i = std::begin(t); i < std::prev(std::end(t)); ++i) {
+	for (auto i = std::begin(t); i < std::prev(std::end(t));++i){
 		for (auto j = std::next(i);
 				j < std::end(t) && (**j).y-(**i).y<d; ++j) {
 			d = std::min(d,(*i)->dist(**j));
@@ -64,7 +65,7 @@ void ClosestPairOfPoints(P (&V)[N]) {
 	using It = decltype(p0);
 	It SV[N];
 	for (auto& p : SV) p = p0++;
-	std::sort(std::begin(SV), std::end(SV),[](auto& p1, auto& p2){
+	std::sort(std::begin(SV), std::end(SV),[](auto& p1,auto& p2){
 			return p1->x < p2->x;
 			});
 	auto d = ClosestPair(std::begin(SV), std::end(SV));
@@ -72,7 +73,7 @@ void ClosestPairOfPoints(P (&V)[N]) {
 }
 //test
 int main() {
-	Point<int> P[] = {{2, 3}, {12, 30}, {40, 50}, {5, 1}, {12, 10}, {3, 4}};
+	Point<int> P[] = {{2,3},{12,30},{40,50},{5,1},{12,10},{3,4}};
 	ClosestPairOfPoints(P);
 	return 0;
 }

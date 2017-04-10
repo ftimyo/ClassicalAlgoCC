@@ -11,8 +11,9 @@
  * and Y.
  *
  * Problem:
- * Given two sequences X = ＜x₁,x₂,...,xₘ＞ and Y = ＜y₁,y₂,...,yₙ＞
- * and wish to find the maximum-length common subsequence of X and Y
+ * Given two sequences X = ＜x₁,x₂,...,xₘ＞ and Y =＜y₁,y₂,...,yₙ＞
+ * and wish to find the maximum-length common subsequence of X
+ * and Y
  *
  * Optimal substructure of an LCS
  * 1. If xₘ=yₙ,then zₖ=xₘ=yₙ and Zₖ₋₁ is an LCS of Xₘ₋₁ and Yₙ₋₁.
@@ -21,7 +22,7 @@
  *
  * Let us define c[i,j] to be the length of an LCS of the
  * sequences Xᵢ and Xⱼ. If either i = 0 or j = 0, LCS is 0.
- * c[i,j] = 0												if i = 0 or j = 0,
+ * c[i,j] = 0								if i = 0 or j = 0,
  * c[i,j] = c[i-1,j-1] + 1					if i,j > 0 and xᵢ=yⱼ,
  * c[i,j] = max(c[i,j-1],c[i-1,j])	if i,j > 0 and xᵢ≠yⱼ.
  *
